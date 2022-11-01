@@ -55,6 +55,20 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if(collision.gameObject.CompareTag("ColorChanger"))
+        {
+            ChangeColor();
+            Destroy(collision.gameObject);
+            return;
+        }
+
+        if(collision.gameObject.CompareTag("FinishLine"))
+        {
+            gameObject.SetActive(false);
+            Instantiate(playerParticles, transform.position, Quaternion.identity);
+            Invoke("LoadNextScene", restarDelay);
+            return;
+        }
        
         if(!collision.gameObject.CompareTag(currentColor))
         {
@@ -64,9 +78,17 @@ public class Player : MonoBehaviour
         }
     }
 
+    void LoadNextScene()
+    {
+        int activeSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(activeSceneIndex + 1);
+    }
+
     void RestartScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        int activeSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(activeSceneIndex);
+        
     }
 
     void ChangeColor()

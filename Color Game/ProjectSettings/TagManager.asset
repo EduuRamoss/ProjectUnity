@@ -8,6 +8,8 @@ TagManager:
   - Violet
   - Cyan
   - Pink
+  - ColorChanger
+  - FinishLine
   layers:
   - Default
   - TransparentFX
